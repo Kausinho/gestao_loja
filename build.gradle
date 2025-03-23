@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.loja'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+application {
+    mainClassName = 'com.loja.AppLauncher'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'com.loja.AppLauncher'
+        )
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
+
+// Criar uma pasta de recursos se ela não existir
+task createResourcesDir {
+    mkdir "src/main/resources"
+}
+
+// Executar esta tarefa antes de compilar
+compileJava.dependsOn createResourcesDir 
